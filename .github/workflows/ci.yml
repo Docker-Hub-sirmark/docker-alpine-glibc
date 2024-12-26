@@ -19,7 +19,7 @@ jobs:
       matrix:
         include:
 #VERSIONS
-          - name: alpine-glibc
+          - name: alpine3.21-glibc2.34-r0
             context: 3.21
             platforms: linux/amd64,linux/arm64
             tags: |
