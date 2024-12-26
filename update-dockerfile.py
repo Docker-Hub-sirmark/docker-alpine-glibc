@@ -45,7 +45,7 @@ def update_ci():
             platform.append(f"{arch}")
         platform = ",".join(platform)
 
-        versions += f"          - name: alpine-glibc\n"
+        versions += f"          - name: alpine{version}-glibc{glibc_version}\n"
         versions += f"            context: {version}\n"
         versions += f"            platforms: {platform}\n"
         versions += f"            tags: |\n"
