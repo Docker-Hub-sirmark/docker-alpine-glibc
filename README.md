@@ -7,10 +7,10 @@ If you need to update your libc library cache, use `/usr/glibc-compat/sbin/ldcon
 
 Fork from [frolvlad/alpine-glibc](https://hub.docker.com/r/frolvlad/alpine-glibc)
 
-## Supported tags
+## Supported tags and respective `Dockerfile` links
 No `latest` tag, please use specific version tags.
 
- - `3.21`
+ - [`3.21`](https://github.com/Docker-Hub-sirmark/docker-alpine-glibc/blob/main/3.21/Dockerfile)
 
 ## Docker Pull Command
 
