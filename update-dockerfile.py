@@ -4,7 +4,7 @@ import os
 import sys
 
 alpine_versions = [
-    "3.21",
+    "3.22",
 ]
 
 glibc_version = "2.34-r0"
