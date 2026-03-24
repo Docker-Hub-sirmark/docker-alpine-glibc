@@ -10,23 +10,23 @@ Fork from [frolvlad/alpine-glibc](https://hub.docker.com/r/frolvlad/alpine-glibc
 ## Supported tags and respective `Dockerfile` links
 No `latest` tag, please use specific version tags.
 
- - [`3.23`](https://github.com/Docker-Hub-sirmark/docker-alpine-glibc/blob/main/3.23/Dockerfile)
+ - [`3.23-glibc2.42`](https://github.com/Docker-Hub-sirmark/docker-alpine-glibc/blob/main/3.23/Dockerfile)
 
 ## Docker Pull Command
 
 ```console
-docker pull sirmark/alpine-glibc:3.23
+docker pull sirmark/alpine-glibc:3.23-glibc2.42
 ```
 
 ## Usage Example
 Pull and run.
 ```console
-$ docker pull sirmark/alpine-glibc:3.23
-$ docker run --rm -it sirmark/alpine-glibc:3.23
+$ docker pull sirmark/alpine-glibc:3.23-glibc2.42
+$ docker run --rm -it sirmark/alpine-glibc:3.23-glibc2.42
 ```
 This image is intended to be a base image for your projects, so you may use it like this:
 ```dockerfile
-FROM sirmark/alpine-glibc:3.23
+FROM sirmark/alpine-glibc:3.23-glibc2.42
 
 COPY ./my_app /usr/local/bin/my_app
 ```

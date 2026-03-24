@@ -10,23 +10,23 @@ Fork from [frolvlad/alpine-glibc](https://hub.docker.com/r/frolvlad/alpine-glibc
 ## Supported tags and respective `Dockerfile` links
 No `latest` tag, please use specific version tags.
 
- - [`%%ALPINE-VERSION%%`](https://github.com/Docker-Hub-sirmark/docker-alpine-glibc/blob/main/%%ALPINE-VERSION%%/Dockerfile)
+ - [`%%ALPINE-VERSION%%-glibc%%GLIBC-VERSION%%`](https://github.com/Docker-Hub-sirmark/docker-alpine-glibc/blob/main/%%ALPINE-VERSION%%/Dockerfile)
 
 ## Docker Pull Command
 
 ```console
-docker pull sirmark/alpine-glibc:%%ALPINE-VERSION%%
+docker pull sirmark/alpine-glibc:%%ALPINE-VERSION%%-glibc%%GLIBC-VERSION%%
 ```
 
 ## Usage Example
 Pull and run.
 ```console
-$ docker pull sirmark/alpine-glibc:%%ALPINE-VERSION%%
-$ docker run --rm -it sirmark/alpine-glibc:%%ALPINE-VERSION%%
+$ docker pull sirmark/alpine-glibc:%%ALPINE-VERSION%%-glibc%%GLIBC-VERSION%%
+$ docker run --rm -it sirmark/alpine-glibc:%%ALPINE-VERSION%%-glibc%%GLIBC-VERSION%%
 ```
 This image is intended to be a base image for your projects, so you may use it like this:
 ```dockerfile
-FROM sirmark/alpine-glibc:%%ALPINE-VERSION%%
+FROM sirmark/alpine-glibc:%%ALPINE-VERSION%%-glibc%%GLIBC-VERSION%%
 
 COPY ./my_app /usr/local/bin/my_app
 ```
