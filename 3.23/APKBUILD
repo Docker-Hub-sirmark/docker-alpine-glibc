@@ -11,7 +11,7 @@ source="./glibc-bin.tar.gz
 ld.so.conf"
 subpackages="$pkgname-bin $pkgname-dev $pkgname-i18n"
 triggers="$pkgname-bin.trigger=/lib:/usr/lib:/usr/glibc-compat/lib"
-options="lib64"
+options="lib64 !check"
 
 package() {
   mkdir -p "$pkgdir"/lib "$pkgdir"/lib64 "$pkgdir"/usr/glibc-compat/lib/locale "$pkgdir"/usr/glibc-compat/lib64 "$pkgdir"/etc
