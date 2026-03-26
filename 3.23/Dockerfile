@@ -76,9 +76,13 @@ RUN --mount=from=packager,src=/tmp/,dst=/tmp/ \
     *)       echo "Unsupported architecture: ${TARGETARCH}" && exit 1 ;; \
     esac && \
     apk add --no-cache \
+        musl-locales \
+        musl-locales-lang \
+        tzdata \
         /tmp/glibc-${GLIBC_VERSION}-*.apk \
         /tmp/glibc-bin-${GLIBC_VERSION}-*.apk \
         /tmp/glibc-i18n-${GLIBC_VERSION}-*.apk && \
+    install -Dm 0644 /usr/share/zoneinfo/${TZ} /etc/zoneinfo/${TZ} && \
     /usr/glibc-compat/bin/localedef --force --inputfile POSIX --charmap UTF-8 C.UTF-8 || true && \
     echo "export LANG=C.UTF-8" > /etc/profile.d/locale.sh && \
     apk del glibc-i18n
