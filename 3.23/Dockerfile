@@ -13,7 +13,7 @@ ARG ALPINE_VERSION=3.23 \
 # Stage 1: use docker-glibc-builder build glibc.tar.gz
 FROM ubuntu:24.04 AS builder
 ARG DEBIAN_FRONTEND=noninteractive \
-    GLIBC_VERSION=2.42
+    GLIBC_VERSION
 LABEL maintainer="Sasha Gerrand <github+docker-glibc-builder@sgerrand.com>"
 COPY ./configparams /glibc-build/configparams
 COPY ./builder /builder
@@ -33,8 +33,8 @@ RUN apt-get -q update && \
 # Stage 2: use docker-alpine-abuild package apk and keys
 # NOTE: Alpine 3.20 image is used for packaging since the build script fails for unknown reason on the newer Alpine versions.
 #       The building Alpine version does not affect the use of the package in a newer Alpine version, so we are good for now.
-FROM alpine:$ALPINE_PACKAGER AS packager
-ARG GLIBC_VERSION=2.42 \
+FROM alpine:${ALPINE_PACKAGER} AS packager
+ARG GLIBC_VERSION \
     TARGETARCH
 ENV PACKAGER="glibc@gliderlabs.com"
 RUN apk --no-cache add alpine-sdk coreutils cmake sudo && \
@@ -48,10 +48,10 @@ RUN abuild-keygen -na && sudo cp /home/builder/.abuild/${PACKAGER}-*.rsa.pub /et
 WORKDIR /home/builder/package
 COPY --from=builder /glibc-bin.tar.gz ./
 COPY ./APKBUILD ./abuilder ./glibc-bin.trigger ./ld.so.conf ./
-RUN case "$TARGETARCH" in \
+RUN case "${TARGETARCH}" in \
     amd64)   export TARGET_ARCH="x86_64" ;; \
     arm64)   export TARGET_ARCH="aarch64" ;; \
-    *)       echo "Unsupported architecture: $TARGETARCH" && exit 1 ;; \
+    *)       echo "Unsupported architecture: ${TARGETARCH}" && exit 1 ;; \
     esac && \
     sed -i "s/^pkgver=.*/pkgver=${GLIBC_VERSION}/" APKBUILD && \
     sed -i "s/^arch=.*$/arch=\"${TARGET_ARCH}\"/" APKBUILD && \
@@ -61,17 +61,19 @@ RUN case "$TARGETARCH" in \
     mv /packages/builder/${TARGET_ARCH}/*.apk /tmp/
 
 # Stage 3: apk add apk, build alpine-glibc
-FROM alpine:$ALPINE_VERSION
-ARG GLIBC_VERSION=2.42 \
+FROM alpine:${ALPINE_VERSION}
+ARG GLIBC_VERSION \
     TARGETARCH \
     TIMEZONE
-ENV TZ=${TIMEZONE:-UTC}
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    TZ=${TIMEZONE:-UTC}
 RUN --mount=from=packager,src=/tmp/,dst=/tmp/ \
     --mount=from=packager,src=/etc/apk/keys,dst=/etc/apk/keys/ \
-    case "$TARGETARCH" in \
+    case "${TARGETARCH}" in \
     amd64)   export LD_LINUX_PATH="/lib/ld-linux-x86_64.so.2" ;; \
     arm64)   export LD_LINUX_PATH="/lib/ld-linux-aarch64.so.1" ;; \
-    *)       echo "Unsupported architecture: $TARGETARCH" && exit 1 ;; \
+    *)       echo "Unsupported architecture: ${TARGETARCH}" && exit 1 ;; \
     esac && \
     apk add --no-cache \
         /tmp/glibc-${GLIBC_VERSION}-*.apk \
