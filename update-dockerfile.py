@@ -4,7 +4,7 @@ import os
 import sys
 
 alpine_versions = [
-    "3.23",
+    "3.24",
 ]
 
 glibc_version = "2.42"
@@ -53,7 +53,7 @@ def update_readme():
         write_file(f"README.md", rendered)
 
 def update_ci():
-    file = ".github/workflows/ci.yml"
+    file = ".github/workflows/ci.yaml"
     config = read_file(file)
 
     versions = ""
